@@ -1,11 +1,13 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import app from './app';
+import app from './app.js';
+import { getApiBaseUrl } from './config/environment.js';
 
 dotenv.config();
 
 const port = Number(process.env.PORT || 8000);
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
+const baseUrl = getApiBaseUrl(process.env.CODESPACE_NAME);
 
 async function startServer() {
   try {
@@ -13,7 +15,7 @@ async function startServer() {
     console.log('Connected to MongoDB at', mongoUri);
 
     app.listen(port, () => {
-      console.log(`Backend listening on http://localhost:${port}`);
+      console.log(`Backend listening on ${baseUrl}`);
     });
   } catch (error) {
     console.error('MongoDB connection failed:', error);
