@@ -16,7 +16,12 @@ export default function Activities() {
 
   useEffect(() => {
     fetch(`${getApiBaseUrl()}/activities`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(setActivities)
       .catch(() => setError('Unable to fetch activity records.'));
   }, []);

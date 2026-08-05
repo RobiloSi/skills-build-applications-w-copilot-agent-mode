@@ -20,7 +20,12 @@ export default function Leaderboard() {
 
   useEffect(() => {
     fetch(`${getApiBaseUrl()}/activities`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then((activities: Activity[]) => {
         const scores = activities.reduce<Record<string, LeaderboardEntry>>((acc, activity) => {
           const name = typeof activity.user === 'string' ? activity.user : activity.user.name;
