@@ -1,13 +1,15 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import app from './app.js';
-import { getApiBaseUrl } from './config/environment.js';
 
 dotenv.config();
 
 const port = Number(process.env.PORT || 8000);
 const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/octofit_db';
-const baseUrl = getApiBaseUrl(process.env.CODESPACE_NAME);
+const codespaceName = process.env.CODESPACE_NAME;
+const baseUrl = codespaceName
+  ? `https://${codespaceName}-8000.app.github.dev`
+  : `http://localhost:${port}`;
 
 async function startServer() {
   try {
