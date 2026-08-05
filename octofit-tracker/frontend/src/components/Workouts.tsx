@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
+import { fetchArray } from '../utils/api';
 
 type Workout = {
   id: string;
@@ -15,13 +15,7 @@ export default function Workouts() {
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    fetch(`${getApiBaseUrl()}/workouts`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+    fetchArray<Workout>('/workouts')
       .then(setWorkouts)
       .catch(() => setError('Unable to fetch workouts.'));
   }, []);

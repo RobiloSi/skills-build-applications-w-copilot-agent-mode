@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
+import { fetchArray } from '../utils/api';
 
 type User = {
   _id: string;
@@ -15,8 +15,7 @@ export default function Users() {
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    fetch(`${getApiBaseUrl()}/users`)
-      .then((response) => response.json())
+    fetchArray<User>('/users')
       .then(setUsers)
       .catch(() => setError('Unable to fetch users.'));
   }, []);

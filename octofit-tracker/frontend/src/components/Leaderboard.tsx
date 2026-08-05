@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
+import { fetchArray } from '../utils/api';
 
 type Activity = {
   _id: string;
@@ -19,14 +19,8 @@ export default function Leaderboard() {
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    fetch(`${getApiBaseUrl()}/activities`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((activities: Activity[]) => {
+    fetchArray<Activity>('/activities')
+      .then((activities) => {
         const scores = activities.reduce<Record<string, LeaderboardEntry>>((acc, activity) => {
           const name = typeof activity.user === 'string' ? activity.user : activity.user.name;
           const entry = acc[name] || { name, totalCalories: 0, totalMinutes: 0 };

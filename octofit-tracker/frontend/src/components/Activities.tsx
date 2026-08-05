@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getApiBaseUrl } from '../utils/api';
+import { fetchArray } from '../utils/api';
 
 type Activity = {
   _id: string;
@@ -15,13 +15,7 @@ export default function Activities() {
   const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    fetch(`${getApiBaseUrl()}/activities`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
+    fetchArray<Activity>('/activities')
       .then(setActivities)
       .catch(() => setError('Unable to fetch activity records.'));
   }, []);
