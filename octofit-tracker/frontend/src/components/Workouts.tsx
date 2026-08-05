@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getApiBaseUrl } from '../utils/api';
 
 type Workout = {
-  _id?: string;
+  id: string;
   name: string;
   description: string;
   durationMinutes: number;
@@ -16,7 +16,12 @@ export default function Workouts() {
 
   useEffect(() => {
     fetch(`${getApiBaseUrl()}/workouts`)
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(setWorkouts)
       .catch(() => setError('Unable to fetch workouts.'));
   }, []);
@@ -27,7 +32,7 @@ export default function Workouts() {
       {error && <div className="alert alert-danger">{error}</div>}
       <div className="row">
         {workouts.map((workout) => (
-          <div className="col-md-6" key={workout._id ?? workout.name}>
+          <div className="col-md-6" key={workout.id}>
             <div className="card mb-3 shadow-sm">
               <div className="card-body">
                 <h5 className="card-title">{workout.name}</h5>

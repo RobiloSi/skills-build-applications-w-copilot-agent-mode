@@ -3,8 +3,22 @@ import { Router } from 'express';
 export const workoutsRouter = Router();
 
 const sampleWorkouts = [
-  { id: '1', name: 'Strength Circuit', duration: 45, difficulty: 'Intermediate' },
-  { id: '2', name: 'Cardio Sprint', duration: 30, difficulty: 'Beginner' }
+  {
+    id: '1',
+    name: 'Strength Circuit',
+    description: 'A full-body strength workout that builds endurance and muscle.',
+    duration: 45,
+    difficulty: 'Intermediate',
+    focusAreas: ['Strength', 'Endurance']
+  },
+  {
+    id: '2',
+    name: 'Cardio Sprint',
+    description: 'A high-intensity interval training session to boost cardio fitness.',
+    duration: 30,
+    difficulty: 'Beginner',
+    focusAreas: ['Cardio', 'Speed']
+  }
 ];
 
 workoutsRouter.get('/', (_req, res) => {
