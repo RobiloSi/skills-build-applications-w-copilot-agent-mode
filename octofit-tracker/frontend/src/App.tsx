@@ -1,21 +1,29 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-
-function Home() {
-  return (
-    <div className="container py-5">
-      <h1>OctoFit Tracker</h1>
-      <p className="lead">Modern fitness tracking for teams, workouts, and leaderboards.</p>
-    </div>
-  );
-}
+import Navigation from './components/Navigation';
+import Home from './components/Home';
+import Users from './components/Users';
+import Activities from './components/Activities';
+import Workouts from './components/Workouts';
+import Teams from './components/Teams';
+import Leaderboard from './components/Leaderboard';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      <div className="d-flex flex-column min-vh-100">
+        <Navigation />
+        <main className="flex-grow-1 container py-4">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/users" element={<Users />} />
+            <Route path="/activities" element={<Activities />} />
+            <Route path="/workouts" element={<Workouts />} />
+            <Route path="/teams" element={<Teams />} />
+            <Route path="/leaderboard" element={<Leaderboard />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   );
 }
